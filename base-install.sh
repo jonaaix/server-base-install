@@ -142,6 +142,7 @@ log "Step 7: Adding bash aliases."
 sudo tee -a /home/"$USERNAME"/.bashrc > /dev/null << 'EOF'
 alias dc="docker compose"
 alias randpw="openssl rand -base64 32 | tr '+/=' '___'"
+alias sshkeygen-best="ssh-keygen -t ed25519 -a 100"
 EOF
 
 
