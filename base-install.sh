@@ -18,7 +18,7 @@ ${CYAN}=============================================================${NC}
 7. Add bash aliases.
 8. Install Docker.
 9. Add Docker to UFW rules.
-11. Install the Docker main-nginx-proxy and configure it.
+11. Install the Docker main-caddy-proxy and configure it.
 
 ${CYAN}=============================================================${NC}
 The installation will begin in 10 seconds...
@@ -239,26 +239,26 @@ EOL
 log "Restarting UFW service."
 sudo systemctl restart ufw
 
-# Step 11: Install the Docker main-nginx-proxy
-log "Step 11: Installing Docker main-nginx-proxy."
+# Step 11: Install the Docker main-caddy-proxy
+log "Step 11: Installing Docker main-caddy-proxy."
 
-log "Cloning main-nginx-proxy repository."
-cd /var/www && git clone --depth=1 --branch=main https://github.com/umexco/main-nginx-proxy.git
+log "Cloning main-caddy-proxy repository."
+cd /var/www && git clone --depth=1 --branch=main https://github.com/jonaaix/main-caddy-proxy.git
 
-log "Removing Git directory from main-nginx-proxy."
-sudo rm -rf /var/www/main-nginx-proxy/.git
+log "Removing Git directory from main-caddy-proxy."
+sudo rm -rf /var/www/main-caddy-proxy/.git
 
-log "Creating Docker network for main-nginx-proxy."
-cd /var/www/main-nginx-proxy && docker network create main-nginx-proxy
+log "Creating Docker network for main-caddy-proxy."
+cd /var/www/main-caddy-proxy && docker network create main-proxy
 
 log "Prompting user for email for certificate notifications."
 read -p "Enter your email for certificate notifications: " USER_EMAIL
 
 log "Updating Docker compose file with user email."
-sudo sed -i "s/DEFAULT_EMAIL=[^ ]*/DEFAULT_EMAIL=$USER_EMAIL/" /var/www/main-nginx-proxy/docker-compose.yaml
+sudo sed -i "s/CADDY_DOCKER_EMAIL=[^ ]*/CADDY_DOCKER_EMAIL=$USER_EMAIL/" /var/www/main-caddy-proxy/compose.yaml
 
-log "Starting Docker main-nginx-proxy container."
-cd /var/www/main-nginx-proxy && docker compose up -d
+log "Starting Docker main-caddy-proxy container."
+cd /var/www/main-caddy-proxy && docker compose up -d
 
 # Setup SSH directory and known_hosts
 log "Add SSH base config"
